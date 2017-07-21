@@ -32,7 +32,7 @@ import com.example.jhordan.people_mvvm.viewmodel.PeopleViewModel;
 import java.util.Observable;
 import java.util.Observer;
 
-public class PeopleActivity extends AppCompatActivity implements Observer {
+public class PeopleActivity extends AppCompatActivity {
 
   private PeopleActivityBinding peopleActivityBinding;
   private PeopleViewModel peopleViewModel;
@@ -42,24 +42,12 @@ public class PeopleActivity extends AppCompatActivity implements Observer {
 
     initDataBinding();
     setSupportActionBar(peopleActivityBinding.toolbar);
-    setupListPeopleView(peopleActivityBinding.listPeople);
-    setupObserver(peopleViewModel);
   }
 
   private void initDataBinding() {
     peopleActivityBinding = DataBindingUtil.setContentView(this, R.layout.people_activity);
     peopleViewModel = new PeopleViewModel(this);
     peopleActivityBinding.setMainViewModel(peopleViewModel);
-  }
-
-  private void setupListPeopleView(RecyclerView listPeople) {
-    PeopleAdapter adapter = new PeopleAdapter();
-    listPeople.setAdapter(adapter);
-    listPeople.setLayoutManager(new LinearLayoutManager(this));
-  }
-
-  public void setupObserver(Observable observable) {
-    observable.addObserver(this);
   }
 
   @Override protected void onDestroy() {
@@ -82,13 +70,5 @@ public class PeopleActivity extends AppCompatActivity implements Observer {
 
   private void startActivityActionView() {
     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(PeopleFactory.PROJECT_URL)));
-  }
-
-  @Override public void update(Observable observable, Object data) {
-    if (observable instanceof PeopleViewModel) {
-      PeopleAdapter peopleAdapter = (PeopleAdapter) peopleActivityBinding.listPeople.getAdapter();
-      PeopleViewModel peopleViewModel = (PeopleViewModel) observable;
-      peopleAdapter.setPeopleList(peopleViewModel.getPeopleList());
-    }
   }
 }

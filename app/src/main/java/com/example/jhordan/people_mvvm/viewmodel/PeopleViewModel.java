@@ -20,6 +20,8 @@ import com.example.jhordan.people_mvvm.data.PeopleFactory;
 import com.example.jhordan.people_mvvm.data.PeopleResponse;
 import com.example.jhordan.people_mvvm.data.PeopleService;
 import com.example.jhordan.people_mvvm.model.People;
+import com.example.jhordan.people_mvvm.view.PeopleAdapter;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -28,12 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class PeopleViewModel extends Observable {
+public class PeopleViewModel {
 
-  public ObservableInt peopleProgress;
-  public ObservableInt peopleRecycler;
-  public ObservableInt peopleLabel;
-  public ObservableField<String> messageLabel;
+  public final ObservableInt peopleProgress;
+  public final ObservableInt peopleRecycler;
+  public final ObservableInt peopleLabel;
+  public final ObservableField<String> messageLabel;
+
+  public final PeopleAdapter adapter;
 
   private List<People> peopleList;
   private Context context;
@@ -47,6 +51,8 @@ public class PeopleViewModel extends Observable {
     peopleRecycler = new ObservableInt(View.GONE);
     peopleLabel = new ObservableInt(View.VISIBLE);
     messageLabel = new ObservableField<>(context.getString(R.string.default_loading_people));
+
+    adapter = new PeopleAdapter();
   }
 
   public void onClickFabLoad(View view) {
@@ -90,12 +96,7 @@ public class PeopleViewModel extends Observable {
 
   private void changePeopleDataSet(List<People> peoples) {
     peopleList.addAll(peoples);
-    setChanged();
-    notifyObservers();
-  }
-
-  public List<People> getPeopleList() {
-    return peopleList;
+    adapter.setPeopleList(peopleList);
   }
 
   private void unSubscribeFromObservable() {

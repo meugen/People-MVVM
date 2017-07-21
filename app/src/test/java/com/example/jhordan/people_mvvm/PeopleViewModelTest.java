@@ -18,11 +18,13 @@ package com.example.jhordan.people_mvvm;
 
 import android.view.View;
 import com.example.jhordan.people_mvvm.data.FakeRandomUserGeneratorAPI;
+import com.example.jhordan.people_mvvm.data.PeopleResponse;
 import com.example.jhordan.people_mvvm.data.PeopleService;
 import com.example.jhordan.people_mvvm.databinding.PeopleActivityBinding;
 import com.example.jhordan.people_mvvm.model.People;
 import com.example.jhordan.people_mvvm.viewmodel.PeopleViewModel;
 import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import java.util.List;
 import org.junit.Before;

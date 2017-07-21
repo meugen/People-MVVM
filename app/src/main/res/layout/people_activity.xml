@@ -60,7 +60,9 @@
           android:scrollbars="vertical"
           app:layout_behavior="@string/appbar_scrolling_view_behavior"
           app:visibility="@{mainViewModel.peopleRecycler}"
-          tools:listitem="@layout/item_people"/>
+          tools:listitem="@layout/item_people"
+          app:layoutManager="LinearLayoutManager"
+          app:adapter="@{mainViewModel.adapter}"/>
 
 
     </LinearLayout>
